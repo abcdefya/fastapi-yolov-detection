@@ -10,7 +10,7 @@ import os
 from pathlib import Path
 from ultralytics import YOLO
 import logging
-from app.config.settings import MODEL_PATH, TEMP_DIR
+from app.config.config import MODEL_PATH, TEMP_DIR, BASE_DIR
 
 # Configure logging
 logging.basicConfig(
@@ -45,44 +45,34 @@ logger.info(f"YOLOv8 model loaded from {MODEL_PATH}")
 
 @app.post("/predict/image")
 async def predict_image_with_bbox(file: UploadFile = File(...)):
-    logger.info(f"Received image upload: {file.filename}")
-    
-    # Validate file type
-    if not file.content_type.startswith("image/"):
-        logger.error(f"Invalid file type for image: {file.content_type}")
-        raise HTTPException(status_code=400, detail="File must be an image (jpg, png, etc.)")
-    
-    # Read image
+    # Đọc file ảnh
     contents = await file.read()
     nparr = np.frombuffer(contents, np.uint8)
     img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
-    if img is None:
-        logger.error("Failed to decode image")
-        raise HTTPException(status_code=400, detail="Cannot read image")
     
-    # Run prediction
-    logger.info("Running YOLO prediction on image")
-    results = model(img, classes=[16, 17])  # Limit to dog (16) and cat (17)
+    # Chạy prediction
+    results = model(img)
     
-    # Log detected objects
-    if len(results[0].boxes) > 0:
-        for box in results[0].boxes:
+    # Log detected objects to see if anything is found
+    detections = results[0].boxes
+    if len(detections) > 0:
+        logger.info(f"Found {len(detections)} objects.")
+        for box in detections:
             class_name = results[0].names[int(box.cls)]
             confidence = box.conf.item()
-            logger.info(f"Detected {class_name} with confidence {confidence:.2f}")
+            logger.info(f"  - Detected {class_name} with confidence {confidence:.2f}")
     else:
-        logger.info("No dogs or cats detected in image")
+        logger.info("No objects detected in the image.")
     
-    # Draw bounding boxes
+    # Vẽ bounding boxes
     annotated_img = results[0].plot()
     
-    # Convert to bytes for response
+    # Chuyển ảnh thành bytes để trả về
     is_success, buffer = cv2.imencode(".jpg", annotated_img)
     if not is_success:
-        logger.error("Failed to encode image")
-        raise HTTPException(status_code=500, detail="Failed to process image")
+        return JSONResponse(content={"error": "Failed to process image"}, status_code=500)
     
-    logger.info("Image processed successfully")
+    # Trả về ảnh dưới dạng response
     return StreamingResponse(io.BytesIO(buffer.tobytes()), media_type="image/jpeg")
 
 @app.post("/predict/video")

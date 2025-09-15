@@ -1,0 +1,60 @@
+2025-09-15 15:04:42,698 [INFO] app.main: Starting Animal Detection API
+2025-09-15 15:04:42,823 [INFO] app.main: YOLOv8 model loaded from D:\Working\fastapi-yolov-detection\data\models\yolov8n.pt
+2025-09-15 15:05:19,809 [INFO] app.main: Starting Animal Detection API
+2025-09-15 15:05:19,938 [INFO] app.main: YOLOv8 model loaded from D:\Working\fastapi-yolov-detection\data\models\yolov8n.pt
+2025-09-15 15:05:29,304 [INFO] app.main: Received image upload: sample_image.jpg
+2025-09-15 15:05:29,308 [INFO] app.main: Running YOLO prediction on image
+2025-09-15 15:05:29,747 [INFO] app.main: No dogs or cats detected in image
+2025-09-15 15:05:29,763 [INFO] app.main: Image processed successfully
+2025-09-15 15:05:41,184 [INFO] app.main: Received video upload: dog.mp4
+2025-09-15 15:05:41,193 [INFO] app.main: Saved temporary video file: D:\Working\fastapi-yolov-detection\data\temp\tmpoadb5nc7.mp4
+2025-09-15 15:05:41,498 [INFO] app.main: Detected dog with confidence 0.89 in frame 1
+2025-09-15 15:05:41,522 [INFO] app.main: Video frame processed successfully
+2025-09-15 15:05:41,542 [INFO] app.main: Deleted temporary video file: D:\Working\fastapi-yolov-detection\data\temp\tmpoadb5nc7.mp4
+2025-09-15 15:06:28,563 [INFO] app.main: Starting Animal Detection API
+2025-09-15 15:06:28,662 [INFO] app.main: YOLOv8 model loaded from D:\Working\fastapi-yolov-detection\data\models\yolov8n.pt
+2025-09-15 15:06:47,648 [INFO] app.main: Starting Animal Detection API
+2025-09-15 15:06:47,749 [INFO] app.main: YOLOv8 model loaded from D:\Working\fastapi-yolov-detection\data\models\yolov8n.pt
+2025-09-15 15:06:53,414 [INFO] app.main: Received image upload: sample_image.jpg
+2025-09-15 15:06:53,418 [INFO] app.main: Running YOLO prediction on image
+2025-09-15 15:06:53,602 [INFO] app.main: No dogs or cats detected in image
+2025-09-15 15:06:53,615 [INFO] app.main: Image processed successfully
+2025-09-15 15:07:12,632 [INFO] app.main: Starting Animal Detection API
+2025-09-15 15:07:12,731 [INFO] app.main: YOLOv8 model loaded from D:\Working\fastapi-yolov-detection\data\models\yolov8n.pt
+2025-09-15 15:07:20,153 [INFO] app.main: Received image upload: sample_image.jpg
+2025-09-15 15:07:20,158 [INFO] app.main: Running YOLO prediction on image
+2025-09-15 15:07:20,283 [INFO] app.main: No dogs or cats detected in image
+2025-09-15 15:07:20,294 [INFO] app.main: Image processed successfully
+2025-09-15 15:08:47,047 [INFO] app.main: Starting Animal Detection API
+2025-09-15 15:08:47,167 [INFO] app.main: YOLOv8 model loaded from D:\Working\fastapi-yolov-detection\data\models\yolov8n.pt
+2025-09-15 15:09:10,773 [INFO] app.main: Starting Animal Detection API
+2025-09-15 15:09:10,884 [INFO] app.main: YOLOv8 model loaded from D:\Working\fastapi-yolov-detection\data\models\yolov8n.pt
+2025-09-15 15:09:17,505 [INFO] app.main: Received image upload: sample_image.jpg
+2025-09-15 15:09:17,511 [INFO] app.main: Running YOLO prediction on image
+2025-09-15 15:09:17,668 [INFO] app.main: No dogs or cats detected in image
+2025-09-15 15:09:17,677 [INFO] app.main: Image processed successfully
+2025-09-15 15:09:30,258 [INFO] app.main: Received video upload: dog.mp4
+2025-09-15 15:09:30,258 [INFO] app.main: Saved temporary video file: D:\Working\fastapi-yolov-detection\data\temp\tmp60hk1e61.mp4
+2025-09-15 15:09:30,512 [INFO] app.main: Detected dog with confidence 0.89 in frame 1
+2025-09-15 15:09:30,538 [INFO] app.main: Video frame processed successfully
+2025-09-15 15:09:30,554 [INFO] app.main: Deleted temporary video file: D:\Working\fastapi-yolov-detection\data\temp\tmp60hk1e61.mp4
+2025-09-15 15:11:24,304 [INFO] app.main: Received image upload: sample_image.jpg
+2025-09-15 15:11:24,307 [INFO] app.main: Running YOLO prediction on image
+2025-09-15 15:11:24,871 [INFO] app.main: No dogs or cats detected in image
+2025-09-15 15:11:24,884 [INFO] app.main: Image processed successfully
+2025-09-15 15:11:40,702 [INFO] app.main: Received video upload: dog.mp4
+2025-09-15 15:11:40,707 [INFO] app.main: Saved temporary video file: D:\Working\fastapi-yolov-detection\data\temp\tmpofwlgkq3.mp4
+2025-09-15 15:11:40,950 [INFO] app.main: Detected dog with confidence 0.89 in frame 1
+2025-09-15 15:11:40,972 [INFO] app.main: Video frame processed successfully
+2025-09-15 15:11:40,987 [INFO] app.main: Deleted temporary video file: D:\Working\fastapi-yolov-detection\data\temp\tmpofwlgkq3.mp4
+2025-09-15 15:19:14,527 [INFO] app.main: Starting Animal Detection API
+2025-09-15 15:19:14,603 [INFO] app.main: YOLOv8 model loaded from D:\Working\fastapi-yolov-detection\data\models\yolov8n.pt
+2025-09-15 15:19:29,281 [INFO] app.main: Found 3 objects.
+2025-09-15 15:19:29,282 [INFO] app.main:   - Detected person with confidence 0.84
+2025-09-15 15:19:29,283 [INFO] app.main:   - Detected person with confidence 0.82
+2025-09-15 15:19:29,283 [INFO] app.main:   - Detected tie with confidence 0.29
+2025-09-15 15:19:41,772 [INFO] app.main: Received video upload: dog.mp4
+2025-09-15 15:19:41,779 [INFO] app.main: Saved temporary video file: D:\Working\fastapi-yolov-detection\data\temp\tmp7prsn097.mp4
+2025-09-15 15:19:42,142 [INFO] app.main: Detected dog with confidence 0.89 in frame 1
+2025-09-15 15:19:42,167 [INFO] app.main: Video frame processed successfully
+2025-09-15 15:19:42,187 [INFO] app.main: Deleted temporary video file: D:\Working\fastapi-yolov-detection\data\temp\tmp7prsn097.mp4
