@@ -38,25 +38,25 @@ ANIMAL_CLASSES = [15, 16]
 
 @app.post("/predict/image")
 async def predict_image_with_bbox(file: UploadFile = File(...)):
-    # Đọc file ảnh
+    # Read image file path
     contents = await file.read()
     nparr = np.frombuffer(contents, np.uint8)
     img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
     if img is None:
         return JSONResponse(content={"error": "Failed to decode image"}, status_code=400)
 
-    # Chạy prediction
+    # Perform prediction
     results = model(img)
 
-    # Vẽ bounding boxes
+    # bounding boxes drawing
     annotated_img = results[0].plot()
 
-    # Chuyển ảnh thành bytes để trả về
+    # Convert image to bytes to return
     is_success, buffer = cv2.imencode(".jpg", annotated_img)
     if not is_success:
         return JSONResponse(content={"error": "Failed to process image"}, status_code=500)
 
-    # Trả về ảnh dưới dạng response
+    # Return image as response
     return StreamingResponse(io.BytesIO(buffer.tobytes()), media_type="image/jpeg")
 
 
@@ -118,17 +118,17 @@ async def track_video(
     background_tasks: BackgroundTasks,
     file: UploadFile = File(...),
     conf: float = 0.25,
-    tracker: str = "bytetrack.yaml"  # hoặc "botsort.yaml"
+    tracker: str = "bytetrack.yaml"  # or "botsort.yaml"
 ):
     """
     Nhận video, chạy YOLOv8 tracking để gán ID & annotate qua các frame,
     sau đó trả về file MP4 đã annotate.
     """
-    # Validate loại file
+    # Validate file type
     if not (file.content_type and file.content_type.startswith("video/")):
         raise HTTPException(status_code=400, detail="File must be a video (mp4, avi, etc.)")
 
-    # Lưu video đầu vào tạm thời
+    # Save input video temporarily
     in_tmp = tempfile.NamedTemporaryFile(delete=False, suffix=".mp4", dir=str(TEMP_DIR))
     try:
         data = await file.read()
@@ -137,7 +137,7 @@ async def track_video(
         in_tmp.write(data)
         in_tmp.close()
 
-        # Đọc thông tin video (fps, size) để khởi tạo VideoWriter cho output
+        # Read video information (fps, size) to initialize VideoWriter for output
         probe = cv2.VideoCapture(in_tmp.name)
         if not probe.isOpened():
             raise HTTPException(status_code=400, detail="Cannot open input video")
@@ -146,14 +146,14 @@ async def track_video(
         height = int(probe.get(cv2.CAP_PROP_FRAME_HEIGHT))
         probe.release()
 
-        # File output tạm
+        # Temporary file output
         out_path = str(TEMP_DIR / f"tracked_{next(tempfile._get_candidate_names())}.mp4")
         fourcc = cv2.VideoWriter_fourcc(*"mp4v")  # phổ biến, dễ phát
         writer = cv2.VideoWriter(out_path, fourcc, fps, (width, height))
         if not writer.isOpened():
             raise HTTPException(status_code=500, detail="Cannot open VideoWriter for output")
 
-        # Chạy tracking dạng stream để tự mình ghi file annotate
+        # Run tracking in stream mode to write annotated file
         # persist=True để giữ ID track giữa các frame
         frames_written = 0
         try:
@@ -167,9 +167,9 @@ async def track_video(
                 verbose=False
             )
             for result in stream:
-                # result.plot() trả về frame BGR đã vẽ bbox + track id
+                # result.plot() returns frame BGR with drawn bbox + track id
                 annotated = result.plot()
-                # Đảm bảo kích thước khớp với writer
+                # Ensure size matches writer
                 if annotated.shape[1] != width or annotated.shape[0] != height:
                     annotated = cv2.resize(annotated, (width, height))
                 writer.write(annotated)
@@ -178,18 +178,18 @@ async def track_video(
             writer.release()
 
         if frames_written == 0:
-            # Không ghi được frame nào
+            # No frames written
             os.unlink(out_path) if os.path.exists(out_path) else None
             raise HTTPException(status_code=500, detail="No frames processed during tracking")
 
-        # Trả về file và lên lịch xoá sau khi gửi xong
+        # Return file and schedule deletion after sending
         background_tasks.add_task(os.unlink, out_path)
         background_tasks.add_task(os.unlink, in_tmp.name)
         filename_out = (Path(file.filename).stem if file.filename else "video") + "_tracked.mp4"
         return FileResponse(out_path, media_type="video/mp4", filename=filename_out)
 
     except Exception as e:
-        # Dọn dẹp nếu có lỗi
+        # Clean up if there is an error
         if os.path.exists(in_tmp.name):
             os.unlink(in_tmp.name)
         raise e
