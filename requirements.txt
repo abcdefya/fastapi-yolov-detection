@@ -3,3 +3,5 @@ uvicorn>=0.23.0
 ultralytics>=8.0.0
 opencv-python>=4.8.0
 python-multipart>=0.0.6
+celery>=5.5.3
+redis>=6.4.0

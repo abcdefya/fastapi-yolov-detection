@@ -5,6 +5,8 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
+    "celery>=5.5.3",
     "nest-asyncio>=1.6.0",
     "pip>=25.2",
+    "redis>=6.4.0",
 ]
